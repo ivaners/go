@@ -22,6 +22,7 @@ import (
 	"regexp"
 	// "strings"
 	"database/sql"
+	"github.com/hailiang/socks"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -45,6 +46,23 @@ func read(path string) string {
 		sList = string(buf[:n])
 	}
 	return sList
+}
+
+func setProxy() {
+	dialSocksProxy := socks.DialSocksProxy(socks.SOCKS5, "61.136.68.76:1080")
+	tr := &http.Transport{Dial: dialSocksProxy}
+	client := &http.Client{Transport: tr}
+
+	req, _ := http.NewRequest("GET", "http://ip.cn/", nil)
+	resp, err := client.Do(req)
+
+	if err != nil {
+		fmt.Println("代理错误...")
+		return
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
 }
 
 func getRequest() {
@@ -152,5 +170,6 @@ func main() {
 	// 	return
 	// }
 	// fmt.Println("...")
-	sqlite()
+	// sqlite()
+	setProxy()
 }

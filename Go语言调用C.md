@@ -23,7 +23,7 @@
 接下来我们要在上面实现的hover包中添加一个调用自己函数库的函数
 
 	package hover
-	//#cgo LDFLAGS: -lhover
+	//#cgo LDFLAGS:-L./lib -lhover
 	//#include <windows.h>
 	//#include <hover.h>
 	import "C"

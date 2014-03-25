@@ -1,7 +1,7 @@
 package hover
 
 /*
-#cgo LDFLAGS: -lhover
+#cgo LDFLAGS:-L./lib -lhover
 #include <windows.h>
 #include "hover.h"
 */
